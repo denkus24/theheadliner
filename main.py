@@ -4,6 +4,7 @@ from data.config import BOT_API, HOUR_DELAY
 from database import Database
 from handlers.client import start, add_channel, back
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from middlewares import AutolanguageMidleware
 
 import asyncio
 import logging
@@ -33,6 +34,8 @@ async def main():
         start.router,
         add_channel.router,
     )
+
+    dp.message.middleware(AutolanguageMidleware())
 
     await dp.start_polling(bot, scheduler=scheduler)
 

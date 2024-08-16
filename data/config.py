@@ -9,3 +9,4 @@ BOT_API = os.getenv('BOT_API')
 ADMIN_ID = os.getenv('ADMIN_ID')
 
 HOUR_DELAY = 2
+SUPPORTABLE_LANGUAGES = ['uk', 'ru', 'en']
