@@ -3,9 +3,10 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message
 from database import Database
 from aiogram.enums.parse_mode import ParseMode
-
 from data import localization
+
 import keyboards
+import logging
 
 router = Router(name=__name__)
 
@@ -25,3 +26,4 @@ async def start(message: Message):
         await Database.add_user(message.from_user.id,
                                 message.from_user.full_name,
                                 message.from_user.username)
+        logging.info(f'User {message.from_user.id} added')
