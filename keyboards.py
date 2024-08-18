@@ -1,4 +1,6 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.filters.callback_data import CallbackData
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from data import localization
 
@@ -17,3 +19,19 @@ def back_keyboard(user_lang: str) -> ReplyKeyboardMarkup:
         KeyboardButton(text=localization.back[user_lang])
     ]
     ])
+
+
+class ChannelCallback(CallbackData, prefix="channel"):
+    id: str
+
+
+def user_channels_keyboard(channels: list[dict]) -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    for channel in channels:
+        builder.row(
+            InlineKeyboardButton(
+                text=f'➖ {channel["title"]}',
+                callback_data=ChannelCallback(id=str(channel['_id'])).pack()
+            )
+        )
+    return builder.as_markup()

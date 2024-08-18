@@ -36,3 +36,7 @@ channel_added = {"uk": "Канал додано",
 turned_back = {"uk": html.quote("Ви повернулись назад"),
                "en": html.quote("You turned back"),
                "ru": html.quote("Вы вернулись назад")}
+
+channel_deleted = {"uk": '✅ Канал видалено',
+                   "en": '✅ Channel deleted',
+                   "ru": '✅ Канал удалено'}

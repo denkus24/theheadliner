@@ -1,18 +1,19 @@
-from typing import Callable, Dict, Any, Awaitable
+from typing import Callable, Dict, Any, Awaitable, Union
 from aiogram import BaseMiddleware
-from aiogram.types import Message
+from aiogram.types import Message, CallbackQuery
 from data.config import SUPPORTABLE_LANGUAGES
+from aiogram.dispatcher.middlewares.user_context import EVENT_FROM_USER_KEY
 
 
-class AutolanguageMidleware(BaseMiddleware):
+class AutoLanguageMiddleware(BaseMiddleware):
     """Middleware for customizing the user language"""
 
     async def __call__(
             self,
-            handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]],
-            event: Message,
+            handler: Callable[[Union[Message, CallbackQuery], Dict[str, Any]], Awaitable[Any]],
+            event: Union[Message, CallbackQuery],
             data: Dict[str, Any]
     ) -> Any:
-        language_code = data['event_context'].user.language_code
-        data['event_context'].user.language_code = language_code if language_code in SUPPORTABLE_LANGUAGES else 'en'
+        user_language_code = data[EVENT_FROM_USER_KEY].language_code if data[EVENT_FROM_USER_KEY].language_code in SUPPORTABLE_LANGUAGES else 'en'
+        data['user_lang']: str = user_language_code
         return await handler(event, data)

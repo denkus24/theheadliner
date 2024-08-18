@@ -2,13 +2,13 @@ from aiogram import Bot, Dispatcher
 from logging.handlers import TimedRotatingFileHandler
 from data.config import BOT_API, HOUR_DELAY
 from database import Database
-from handlers.client import start, add_channel, back
+from handlers.client import start, add_channel, back, channels_list
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from middlewares import AutolanguageMidleware
+from middlewares import AutoLanguageMiddleware
 
 import asyncio
 import logging
-import utils
+import send_info
 
 
 async def main():
@@ -18,30 +18,27 @@ async def main():
     scheduler = AsyncIOScheduler()
     scheduler.start()
 
-    # Settting up sending for users
-    channels = await Database.get_all_channels()
-    for channel in channels:
-        scheduler.add_job(func=utils.send_info,
-                          kwargs={'bot': bot,
-                                  'user_id': channel['id'],
-                                  'rss_url': channel['rss'],
-                                  'title': channel['title']},
-                          trigger='interval',
-                          hours=HOUR_DELAY)
+    # Setting up sending for users
+    scheduler.add_job(func=send_info.send_info,
+                      kwargs={'bot': bot},
+                      trigger='interval',
+                      minutes=HOUR_DELAY)
 
     dp.include_routers(
         back.router,
         start.router,
         add_channel.router,
+        channels_list.router
     )
 
-    dp.message.middleware(AutolanguageMidleware())
+    dp.message.middleware(AutoLanguageMiddleware())
+    dp.callback_query.middleware(AutoLanguageMiddleware())
 
     await dp.start_polling(bot, scheduler=scheduler)
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO,
+    logging.basicConfig(level=logging.DEBUG,
                         handlers=[logging.StreamHandler(),
                                   TimedRotatingFileHandler(f"logs/log", when='midnight', interval=1, backupCount=5)],
                         encoding='utf-8', format='[ %(asctime)s ](%(levelname)s) %(message)s',

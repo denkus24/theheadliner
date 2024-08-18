@@ -1,28 +1,18 @@
-import asyncio
-
-import aiogram.exceptions
-from aiogram import Bot
-import feedparser
-import logging
+from datetime import datetime
 
 
-async def send_info(bot: Bot, user_id: int, rss_url: str, title: str) -> None:
-    """Function for sending RSS content"""
+def convert_to_timestamp(time_str: str):
+    """Function for converting date to timestamp"""
+    time_str_cleaned = ' '.join(time_str.split()[:-1])
+    dt = datetime.strptime(time_str_cleaned, "%a, %d %b %Y %H:%M:%S")
+    timestamp = int(dt.timestamp())
 
-    resp = feedparser.parse(rss_url)
-    logging.info(F"Sending RSS content {title} to user {user_id}")
-    for entry in resp.entries:
-        try:
-            message = (f'<b>{title}</b>\n'
-                       f'<a href="{entry.link}">{entry.title}</a>\n\n'
-                       f'{entry.summary}\n\n'
-                       f'<i>{entry.published}</i>')
+    return timestamp
 
-            await bot.send_message(chat_id=user_id, text=message, parse_mode='HTML')
-        except aiogram.exceptions.TelegramRetryAfter as e:
-            logging.info(f'Sending RSS content {title} to user {user_id} sleep {e.retry_after} seconds')
-
-            await asyncio.sleep(e.retry_after)
-            continue
-        except Exception as e:
-            logging.error(f'Sending RSS content {title} to user {user_id} finished due error:{e}')
+def max_date(entries: list):
+    """Function to find the highest date from a list of entries"""
+    max_timestamp = 0
+    for entry in entries:
+        if convert_to_timestamp(entry.published) > max_timestamp:
+            max_timestamp = convert_to_timestamp(entry.published)
+    return max_timestamp

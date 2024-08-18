@@ -12,8 +12,7 @@ router = Router(name=__name__)
 
 
 @router.message(CommandStart())
-async def start(message: Message):
-    user_lang = message.from_user.language_code
+async def start(message: Message, user_lang:str) -> None:
 
     if await Database.user_exist(message.from_user.id):
         await message.answer(text=localization.start_message[user_lang],
