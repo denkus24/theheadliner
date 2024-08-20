@@ -35,3 +35,22 @@ def user_channels_keyboard(channels: list[dict]) -> InlineKeyboardMarkup:
             )
         )
     return builder.as_markup()
+
+
+class NotificationButton(CallbackData, prefix='notification'):
+    state: bool
+
+
+def settings_keyboard(user_lang: str, messages_enabled: bool) -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    builder.row(InlineKeyboardButton(
+        text=localization.disable_messages[user_lang] if messages_enabled else localization.enable_messages[user_lang],
+        callback_data=NotificationButton(state=messages_enabled).pack()
+    ))
+
+    builder.row(InlineKeyboardButton(
+        text=localization.write_to_developer[user_lang],
+        callback_data='write_to_developer'
+    ))
+
+    return builder.as_markup()

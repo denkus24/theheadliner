@@ -57,7 +57,8 @@ class Database(Base):
     @staticmethod
     async def add_user(id: int, fullname: str, username: str) -> None:
         timestamp = round(datetime.utcnow().timestamp())
-        await Database.insert('users', {'id': id, 'fullname': fullname, 'username': username, 'timestamp': timestamp})
+        await Database.insert('users', {'id': id, 'fullname': fullname, 'username': username, 'timestamp': timestamp,
+                                        'message_enabled': True})
 
     @staticmethod
     async def channel_exist(id: int, rss: str) -> bool:
@@ -99,3 +100,21 @@ class Database(Base):
     @staticmethod
     async def delete_channel(id: str) -> None:
         await Database.delete_one('channels', {'_id': ObjectId(id)})
+
+    @staticmethod
+    async def is_user_notifications_enabled(id: str) -> bool:
+        user = await Database.find_one('users', {'id': id})
+        return user['message_enabled']
+
+    @staticmethod
+    async def update_user_notification(id: str, state: bool) -> None:
+        await Database.update_one('users', {'id': id}, {'$set': {'message_enabled': state}})
+
+    @staticmethod
+    async def get_users_with_disabled_notifications() -> list:
+        users = await Database.get_all('users')
+        result = []
+        for user in users:
+            if not user['message_enabled']:
+                result.append(user['id'])
+        return result
