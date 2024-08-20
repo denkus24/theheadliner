@@ -1,13 +1,31 @@
 from aiogram import html
 
 welcome_message = {
-    "uk": f"{html.bold('Ласкаво просимо!')}\nЯ - бот що допоможе тобі слідкувати за новинами, анонсами, блогами і т.д. за допомгою {html.bold('RSS')}.\nДодай канал вже зараз за допомогою кнопки внизу 👇",
-    "en": f"{html.bold('Welcome!')}\nI am a bot that will help you keep up with news, announcements, blogs, etc. {html.bold('RSS')}.\nAdd a channel now for additional help buttons below 👇",
-    "ru": f"{html.bold('Добро пожаловать!')}\nЯ - бот, который поможет тебе следить за новостями, анонсами, блогами и т.д. с помощью {html.bold('RSS')}.\nДобавь канал уже сейчас с помощью кнопки внизу 👇"}
+    "uk": f"{html.bold('Ласкаво просимо!')}\n\nЯ - бот що допоможе тобі слідкувати за новинами, анонсами, блогами і т.д. за допомгою {html.bold('RSS')}.\n"
+          f"Додай канал вже зараз за допомогою кнопки внизу, або уведи його URL 👇",
+    "en": f"{html.bold('Welcome!')}\n\nI am a bot that will help you keep up with news, announcements, blogs, etc. {html.bold('RSS')}.\n"
+          f"Add a channel now for additional help buttons below, or input URL 👇",
+    "ru": f"{html.bold('Добро пожаловать!')}\n\nЯ - бот, который поможет тебе следить за новостями, анонсами, блогами и т.д. с помощью {html.bold('RSS')}.\n"
+          f"Добавь канал уже сейчас с помощью кнопки внизу, или введи его URL 👇"}
 
-start_message = {"uk": f"{html.bold('Привіт!')}\nКнопки для взаємодії внизу 👇",
-                 "en": f"{html.bold('Hello!')}\nButtons to interact at the bottom 👇",
-                 "ru": f"{html.bold('Привет!')}\nКнопки для взаимодействия внизу 👇"}
+start_message = {"uk": f"{html.bold('Привіт!')}\n"
+                       f"Бот безкоштовний, але ви завжди можете підтримати розробника чашечкою кави 😉\n\n"
+                       f"{html.bold('BTC:')} {html.code('bc1qqelnrjvc0tdhmpjlrqkskzlu3p9cx5605q99s5')}\n"
+                       f"{html.bold('ETH:')} {html.code('0x8806c77fA2EA69A56Cd6E19d6451E3ebF3c7753e')}\n"
+                       f"{html.bold('BCH:')} {html.code('qq98nxzs9pz86qv4py9fwwcjyten7fhrvc4z8hmyyk')}\n\n"
+                       f"Кнопки для взаємодії внизу 👇",
+                 "en": f"{html.bold('Hello!')}\n"
+                       f"The bot is free, but you can always support the developer with a cup of coffee 😉\n\n"
+                       f"{html.bold('BTC:')} {html.code('bc1qqelnrjvc0tdhmpjlrqkskzlu3p9cx5605q99s5')}\n"
+                       f"{html.bold('ETH:')} {html.code('0x8806c77fA2EA69A56Cd6E19d6451E3ebF3c7753e')}\n"
+                       f"{html.bold('BCH:')} {html.code('qq98nxzs9pz86qv4py9fwwcjyten7fhrvc4z8hmyyk')}\n\n"
+                       f"Interaction buttons below 👇",
+                 "ru": f"{html.bold('Привет!')}\n"
+                       f"Бот бесплатный, но вы всегда можете поддержать разработчика чашечкой кофе 😉\n\n"
+                       f"{html.bold('BTC:')} {html.code('bc1qqelnrjvc0tdhmpjlrqkskzlu3p9cx5605q99s5')}\n"
+                       f"{html.bold('ETH:')} {html.code('0x8806c77fA2EA69A56Cd6E19d6451E3ebF3c7753e')}\n"
+                       f"{html.bold('BCH:')} {html.code('qq98nxzs9pz86qv4py9fwwcjyten7fhrvc4z8hmyyk')}\n\n"
+                       f"Кнопки для взаимодействия внизу 👇"}
 
 add_channel = {"uk": "Додати канал",
                "en": "Add channel",
@@ -71,4 +89,10 @@ developer_answer = {
     'uk': html.bold('Відповідь від розробника:'),
     'en': html.bold('Answer from developer:'),
     'ru': html.bold('Ответ от разработчика:')
+}
+
+press_on_channel = {
+    'uk': 'Натисніть на канал, якщо хочете скасувати підписку',
+    'en': 'Press on channel if you want to unsubscribe',
+    'ru': 'Нажмите на канал, если хотите отписаться'
 }
