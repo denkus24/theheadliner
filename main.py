@@ -3,6 +3,7 @@ from logging.handlers import TimedRotatingFileHandler
 from data.config import BOT_API, HOUR_DELAY
 from database import Database
 from handlers.client import start, add_channel, back, channels_list, settings
+from handlers.admin import developer_answer
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from middlewares import AutoLanguageMiddleware
 
@@ -29,7 +30,8 @@ async def main():
         start.router,
         add_channel.router,
         channels_list.router,
-        settings.router
+        settings.router,
+        developer_answer.router
     )
 
     dp.message.middleware(AutoLanguageMiddleware())

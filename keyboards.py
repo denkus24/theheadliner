@@ -54,3 +54,17 @@ def settings_keyboard(user_lang: str, messages_enabled: bool) -> InlineKeyboardM
     ))
 
     return builder.as_markup()
+
+
+class AnswerOnMessage(CallbackData, prefix='admin_answer'):
+    user_id: int
+    user_lang: str
+
+
+def answer_on_message(user_id: int, user_lang: str) -> InlineKeyboardMarkup:
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[[
+        InlineKeyboardButton(text='Answer on message',
+                             callback_data=AnswerOnMessage(user_id=user_id,
+                                                           user_lang=user_lang).pack())
+    ]])
+    return keyboard

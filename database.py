@@ -102,12 +102,12 @@ class Database(Base):
         await Database.delete_one('channels', {'_id': ObjectId(id)})
 
     @staticmethod
-    async def is_user_notifications_enabled(id: str) -> bool:
+    async def is_user_notifications_enabled(id: int) -> bool:
         user = await Database.find_one('users', {'id': id})
         return user['message_enabled']
 
     @staticmethod
-    async def update_user_notification(id: str, state: bool) -> None:
+    async def update_user_notification(id: int, state: bool) -> None:
         await Database.update_one('users', {'id': id}, {'$set': {'message_enabled': state}})
 
     @staticmethod

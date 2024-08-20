@@ -57,3 +57,25 @@ write_to_developer = {"uk": '✍️ Написати розробнику',
                       "en": '✍️ Write to developer',
                       "ru": '✍️ Написать разработчику'}
 
+write_message_for_dev = {"uk": 'Уведіть ваше питання розробнику',
+                         "en": 'Write message for developer',
+                         "ru": 'Напишите ваш вопрос разработчику'}
+
+your_message_was_sent = {
+    "uk": f'{html.bold("Ваше повідомлення було відправлено розробнику.")}\nВи отримаєте відповідь згодом.',
+    "en": f'{html.bold("Your message has been sent to the developer.")}\nYou will receive a reply shortly.',
+    "ru": f'{html.bold("Ваше сообщение было отправлено разработчику.")}\nВы получите ответ в ближайшее время.'
+}
+
+
+def developer_answer(user_lang: str, text: str):
+    message = ''
+    match user_lang:
+        case 'uk':
+            message += html.bold('Відповідь від розробника:')
+        case 'en':
+            message += html.bold('Answer from developer:')
+        case 'ru':
+            message += html.bold('Ответ от разработчика:')
+    message += '\n' + text
+    return message
