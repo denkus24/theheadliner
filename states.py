@@ -9,3 +9,6 @@ class WriteToDeveloperUser(StatesGroup):
 
 class WriteToDeveloperAdmin(StatesGroup):
     message = State()
+
+class SenderAdmin(StatesGroup):
+    message = State()

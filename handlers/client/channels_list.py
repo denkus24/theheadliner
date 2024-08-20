@@ -1,6 +1,6 @@
 from aiogram import Router, F
-from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
+from aiogram.filters import Command
 from data import localization
 from database import Database
 
@@ -16,6 +16,7 @@ async def delete_from_channel_list(callback: CallbackQuery, callback_data: keybo
     await callback.message.edit_text(localization.channel_deleted[user_lang])
 
 
+@router.message(Command('channels'))
 @router.message(F.text.in_(localization.my_channels.values()))
 async def channel_list(message: Message, user_lang: str) -> None:
     user_channels = await Database.get_user_channels(message.from_user.id)

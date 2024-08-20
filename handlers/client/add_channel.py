@@ -1,6 +1,7 @@
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
+from aiogram.filters import Command
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from data import localization
 from database import Database
@@ -16,7 +17,7 @@ router = Router(name=__name__)
 def url_validator(url: str) -> bool:
     return re.search(r'(https?://[^\s]+)', url) is not None
 
-
+@router.message(Command('add_channel'))
 @router.message(F.text.in_(localization.add_channel.values()))
 async def add_channel(message: Message, state: FSMContext, user_lang:str) -> None:
     await message.answer(

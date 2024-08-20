@@ -118,3 +118,9 @@ class Database(Base):
             if not user['message_enabled']:
                 result.append(user['id'])
         return result
+
+    @staticmethod
+    async def get_user_ids() -> list:
+        users = await Database.get_all('users')
+        result = [user['id'] for user in users]
+        return result
