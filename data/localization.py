@@ -67,15 +67,8 @@ your_message_was_sent = {
     "ru": f'{html.bold("Ваше сообщение было отправлено разработчику.")}\nВы получите ответ в ближайшее время.'
 }
 
-
-def developer_answer(user_lang: str, text: str):
-    message = ''
-    match user_lang:
-        case 'uk':
-            message += html.bold('Відповідь від розробника:')
-        case 'en':
-            message += html.bold('Answer from developer:')
-        case 'ru':
-            message += html.bold('Ответ от разработчика:')
-    message += '\n' + text
-    return message
+developer_answer = {
+    'uk': html.bold('Відповідь від розробника:'),
+    'en': html.bold('Answer from developer:'),
+    'ru': html.bold('Ответ от разработчика:')
+}

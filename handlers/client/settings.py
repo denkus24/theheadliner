@@ -21,7 +21,8 @@ async def show_settings(message: Message, user_lang: str) -> None:
 
 
 @router.callback_query(keyboards.NotificationButton.filter())
-async def update_notifications(call: CallbackQuery, callback_data: keyboards.NotificationButton, user_lang: str) -> None:
+async def update_notifications(call: CallbackQuery, callback_data: keyboards.NotificationButton,
+                               user_lang: str) -> None:
     await Database.update_user_notification(call.from_user.id, not callback_data.state)
     await call.message.edit_text(text=localization.choose_setting[user_lang],
                                  reply_markup=keyboards.settings_keyboard(user_lang, not callback_data.state))
@@ -36,15 +37,19 @@ async def write_to_developer_handler(call: CallbackQuery, user_lang: str, state:
     await call.message.delete()
     await call.message.answer(text=localization.write_message_for_dev[user_lang],
                               reply_markup=keyboards.back_keyboard(user_lang))
+    
     await state.set_state(states.WriteToDeveloperUser.message)
 
 
 @router.message(states.WriteToDeveloperUser.message)
 async def send_message_to_developer(message: Message, state: FSMContext, user_lang: str) -> None:
-    await message.bot.send_message(chat_id=data.config.ADMIN_ID,  # Sending message for admin
-                                   text=f'User {message.from_user.id}, {message.from_user.full_name} write a message:\n{message.text}',
-                                   reply_markup=keyboards.answer_on_message(message.from_user.id, user_lang))
+    await message.bot.send_message(text=f'User {message.from_user.id}, {message.from_user.full_name} send a question:', chat_id=data.config.ADMIN_ID)  # Sending message for admin
+    await message.copy_to(chat_id=data.config.ADMIN_ID,
+                          text=f'User {message.from_user.id}, {message.from_user.full_name} write a message:\n{message.text}',
+                          reply_markup=keyboards.answer_on_message(message.from_user.id, user_lang))
+
     await message.answer(text=localization.your_message_was_sent[user_lang],  # And for user
                          reply_markup=keyboards.start_keyboard(user_lang), parse_mode=ParseMode.HTML)
     logging.info(f'User {message.from_user.id} send a question for developer')
+
     await state.clear()

@@ -5,6 +5,19 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from data import localization
 
 
+class ChannelCallback(CallbackData, prefix="channel"):
+    id: str
+
+
+class NotificationButton(CallbackData, prefix='notification'):
+    state: bool
+
+
+class AnswerOnMessage(CallbackData, prefix='admin_answer'):
+    user_id: int
+    user_lang: str
+
+
 def start_keyboard(user_lang: str) -> ReplyKeyboardMarkup:
     return ReplyKeyboardMarkup(resize_keyboard=True, keyboard=[[
         KeyboardButton(text=localization.my_channels[user_lang]),
@@ -21,10 +34,6 @@ def back_keyboard(user_lang: str) -> ReplyKeyboardMarkup:
     ])
 
 
-class ChannelCallback(CallbackData, prefix="channel"):
-    id: str
-
-
 def user_channels_keyboard(channels: list[dict]) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     for channel in channels:
@@ -35,10 +44,6 @@ def user_channels_keyboard(channels: list[dict]) -> InlineKeyboardMarkup:
             )
         )
     return builder.as_markup()
-
-
-class NotificationButton(CallbackData, prefix='notification'):
-    state: bool
 
 
 def settings_keyboard(user_lang: str, messages_enabled: bool) -> InlineKeyboardMarkup:
@@ -54,11 +59,6 @@ def settings_keyboard(user_lang: str, messages_enabled: bool) -> InlineKeyboardM
     ))
 
     return builder.as_markup()
-
-
-class AnswerOnMessage(CallbackData, prefix='admin_answer'):
-    user_id: int
-    user_lang: str
 
 
 def answer_on_message(user_id: int, user_lang: str) -> InlineKeyboardMarkup:
