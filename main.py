@@ -23,7 +23,7 @@ async def main():
     scheduler.add_job(func=send_info.send_info,
                       kwargs={'bot': bot},
                       trigger='interval',
-                      minutes=HOUR_DELAY)
+                      hours=HOUR_DELAY)
 
     dp.include_routers(
         back.router,
@@ -43,7 +43,7 @@ async def main():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG,
+    logging.basicConfig(level=logging.INFO,
                         handlers=[logging.StreamHandler(),
                                   TimedRotatingFileHandler(f"logs/log", when='midnight', interval=1, backupCount=5)],
                         encoding='utf-8', format='[ %(asctime)s ](%(levelname)s) %(message)s',
