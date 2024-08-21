@@ -11,7 +11,9 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the req
 pip install -r requirements.txt
 ```
 
-Also fill in the ```.env``` file with your values
+Also fill in the ```.env``` file with your values.
+
+You can configure the delay time and supported languages in the ```config.py``` file.
 
 ## Usage
 
