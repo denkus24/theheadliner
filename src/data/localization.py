@@ -128,3 +128,8 @@ def feed_added(user_lang: str, channel_title: str) -> str:
             return f"✅ Feed {channel_title} added successfully"
         case 'ru':
             return f"✅ Лента {channel_title} добавлена успешно"
+
+
+adding_channel = {'uk': 'Ви ще не додали жодного каналу 😔',
+                  'en': "You haven't added any channel yet 😔",
+                  'ru': 'Вы ещё не добавили ни одного канала 😔'}

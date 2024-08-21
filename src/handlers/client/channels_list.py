@@ -20,6 +20,10 @@ async def delete_from_channel_list(callback: CallbackQuery, callback_data: keybo
 @router.message(F.text.in_(localization.my_channels.values()))
 async def channel_list(message: Message, user_lang: str) -> None:
     user_channels = await Database.get_user_channels(message.from_user.id)
-    await message.answer(text=localization.press_on_channel[user_lang],
-                         reply_markup=keyboards.user_channels_keyboard(user_channels))
+    if len(user_channels) > 0:
+        await message.answer(text=localization.press_on_channel[user_lang],
+                             reply_markup=keyboards.user_channels_keyboard(user_channels))
+    else:
+        await message.answer(text=localization.adding_channel[user_lang])
+
     logging.info(f'User {message.from_user.id} looked up his channels')
