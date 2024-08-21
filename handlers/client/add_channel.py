@@ -2,7 +2,6 @@ from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from aiogram.filters import Command
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from data import localization
 from database import Database
 
@@ -17,9 +16,10 @@ router = Router(name=__name__)
 def url_validator(url: str) -> bool:
     return re.search(r'(https?://[^\s]+)', url) is not None
 
+
 @router.message(Command('add_channel'))
 @router.message(F.text.in_(localization.add_channel.values()))
-async def add_channel(message: Message, state: FSMContext, user_lang:str) -> None:
+async def add_channel(message: Message, state: FSMContext, user_lang: str) -> None:
     await message.answer(
         text=localization.enter_url[user_lang],
         reply_markup=keyboards.back_keyboard(user_lang))
@@ -28,26 +28,26 @@ async def add_channel(message: Message, state: FSMContext, user_lang:str) -> Non
 
 @router.message(F.text.func(lambda text: url_validator(text)))
 @router.message(states.AddChannel.channel_url)
-async def get_channel_url(message: Message, state: FSMContext, scheduler: AsyncIOScheduler, user_lang:str) -> None:
-
+async def get_channel_url(message: Message, state: FSMContext, user_lang: str) -> None:
     if await Database.channel_exist(message.from_user.id, message.text):
-        await message.answer('Channel already existing.', reply_markup=keyboards.start_keyboard(user_lang))
+        await message.answer(text=localization.channel_alerady_existing[user_lang],
+                             reply_markup=keyboards.start_keyboard(user_lang))
     else:
         if not url_validator(message.text):
-            await message.answer('❌ URL is invalid. Please check it and try again.')
+            await message.answer(localization.url_is_invalid[user_lang])
         else:
             info_message: Message = await message.answer(text='Adding channel...', reply_markup=None)
             try:
                 channel_data = await Database.add_channel(message.from_user.id, message.text)
                 await info_message.delete()
-                await message.answer(text=f"✅ Feed {channel_data['title']} added successfully",
+                await message.answer(text=localization.feed_added(user_lang, channel_data['title']),
                                      reply_markup=keyboards.start_keyboard(user_lang))
 
                 logging.info(f'User {message.from_user.id} added new channel with URL:{message.text}')
 
             except Exception as e:
                 await info_message.delete()
-                await message.answer(text='❌ Error while adding channel',
+                await message.answer(text=localization.error_while_adding[user_lang],
                                      reply_markup=keyboards.start_keyboard(user_lang))
 
                 logging.error(f'User {message.from_user.id} adding channel {message.text} finished due error: {e}')

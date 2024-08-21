@@ -96,3 +96,35 @@ press_on_channel = {
     'en': 'Press on channel if you want to unsubscribe',
     'ru': 'Нажмите на канал, если хотите отписаться'
 }
+
+channel_alerady_existing = {
+    "uk": "Канал вже існує.",
+    "en": "Channel already existing.",
+    "ru": "Канал уже существует."
+}
+
+url_is_invalid = {
+    "uk": "❌ Неправильний URL. Будь ласка, перевірте його та спробуйте знову.",
+    "en": "❌ URL is invalid. Please check it and try again.",
+    "ru": "❌ Неверный URL. Пожалуйста, проверьте его и попробуйте снова."
+}
+
+error_while_adding = {
+    "uk": "❌ Помилка під час додавання каналу.",
+    "en": "❌ Error while adding channel.",
+    "ru": "❌ Ошибка при добавлении канала."
+}
+
+adding_channel = {'uk': 'Додавання каналу...',
+                  'en': 'Adding channel...',
+                  'ru': 'Добавление канала...'}
+
+
+def feed_added(user_lang: str, channel_title: str) -> str:
+    match user_lang:
+        case 'uk':
+            return f'✅ Стрічка {channel_title} додана успішно'
+        case 'en':
+            return f"✅ Feed {channel_title} added successfully"
+        case 'ru':
+            return f"✅ Лента {channel_title} добавлена успешно"

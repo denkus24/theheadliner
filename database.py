@@ -10,11 +10,12 @@ import feedparser
 class Base(object):
     """Static class for base database manipulations."""
     DATABASE = None
+    CLIENT = None
 
     @staticmethod
     def init() -> None:
-        client = AsyncIOMotorClient(MONGO_URI)
-        Base.DATABASE = client[DATABASE_NAME]
+        Base.CLIENT = AsyncIOMotorClient(MONGO_URI)
+        Base.DATABASE = Base.CLIENT[DATABASE_NAME]
 
     @staticmethod
     async def insert(collection, data) -> None:
@@ -44,6 +45,15 @@ class Base(object):
     @staticmethod
     async def get_all(collection) -> list:
         return await Base.DATABASE[collection].find().to_list(length=None)
+
+    @staticmethod
+    async def count(collection, query) -> int:
+        return await Base.DATABASE[collection].count_documents(query)
+
+    @staticmethod
+    async def ping() -> bool:
+        res = await Base.CLIENT.admin.command('ping')
+        return bool(res)
 
 
 class Database(Base):
@@ -124,3 +134,7 @@ class Database(Base):
         users = await Database.get_all('users')
         result = [user['id'] for user in users]
         return result
+
+    @staticmethod
+    async def get_number_of_users() -> int:
+        return await Database.count('users', {})
