@@ -36,7 +36,7 @@ async def get_channel_url(message: Message, state: FSMContext, user_lang: str) -
         if not url_validator(message.text):
             await message.answer(localization.url_is_invalid[user_lang])
         else:
-            info_message: Message = await message.answer(text='Adding channel...', reply_markup=None)
+            info_message: Message = await message.answer(text=localization.adding_channel[user_lang], reply_markup=None)
             try:
                 channel_data = await Database.add_channel(message.from_user.id, message.text)
                 await info_message.delete()

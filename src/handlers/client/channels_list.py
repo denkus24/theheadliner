@@ -24,6 +24,6 @@ async def channel_list(message: Message, user_lang: str) -> None:
         await message.answer(text=localization.press_on_channel[user_lang],
                              reply_markup=keyboards.user_channels_keyboard(user_channels))
     else:
-        await message.answer(text=localization.adding_channel[user_lang])
+        await message.answer(text=localization.you_have_not_added_channel[user_lang])
 
     logging.info(f'User {message.from_user.id} looked up his channels')
