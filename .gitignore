@@ -6,4 +6,4 @@
 logs/*
 !logs/.gitkeep
 
-.dev-env
+.env
