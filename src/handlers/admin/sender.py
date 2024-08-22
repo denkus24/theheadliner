@@ -11,16 +11,13 @@ import logging
 router = Router(name=__name__)
 
 
-@router.message(F.from_user.id == data.config.ADMIN_ID)
-@router.message(Command('sender'))
+@router.message(Command('sender'), F.from_user.id == int(data.config.ADMIN_ID))
 async def admin_sender(message: Message, state: FSMContext):
     await message.answer('Enter a message:')
     await state.set_state(states.SenderAdmin.message)
-    await state.set_state(states.SenderAdmin.message)
 
 
-@router.message(F.from_user.id == data.config.ADMIN_ID)
-@router.message(states.SenderAdmin.message)
+@router.message(states.SenderAdmin.message, F.from_user.id == int(data.config.ADMIN_ID))
 async def send_message(message: Message, state: FSMContext):
     all_users = await Database.get_user_ids()
     for id in all_users:
