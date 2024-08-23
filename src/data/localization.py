@@ -133,3 +133,19 @@ def feed_added(user_lang: str, channel_title: str) -> str:
 you_have_not_added_channel = {'uk': 'Ви ще не додали жодного каналу 😔',
                               'en': "You haven't added any channel yet 😔",
                               'ru': 'Вы ещё не добавили ни одного канала 😔'}
+
+export_opml = {'uk': '📥 Експорт до OPML',
+               'en': "📥 Export to OPML",
+               'ru': '📥 Экспорт в OPML'}
+
+import_opml = {'uk': '📥 Імпорт з OPML',
+               'en': "📥 Import from OPML",
+               'ru': '📥 Импорт с OPML'}
+
+send_me_file = {'uk': 'Відправте файл в форматі OPML',
+                'en': "Send me file in OPML format",
+                'ru': 'Отправьте файл в форматі OPML'}
+
+channels_imported_succesfully = {'uk': 'Канали імпортовано успішно',
+                                 'en': "Channel imported successfully",
+                                 'ru': 'Каналы импортировано успешно'}

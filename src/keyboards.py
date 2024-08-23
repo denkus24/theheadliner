@@ -58,6 +58,16 @@ def settings_keyboard(user_lang: str, messages_enabled: bool) -> InlineKeyboardM
         callback_data='write_to_developer'
     ))
 
+    builder.row(InlineKeyboardButton(
+        text=localization.export_opml[user_lang],
+        callback_data='export_opml'
+    ))
+
+    builder.row(InlineKeyboardButton(
+        text=localization.import_opml[user_lang],
+        callback_data='import_opml'
+    ))
+
     return builder.as_markup()
 
 
