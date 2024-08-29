@@ -18,6 +18,10 @@ class AnswerOnMessage(CallbackData, prefix='admin_answer'):
     user_lang: str
 
 
+class FeedClearAnswer(CallbackData, prefix='feed_clear_answer'):
+    answer: bool
+
+
 def start_keyboard(user_lang: str) -> ReplyKeyboardMarkup:
     return ReplyKeyboardMarkup(resize_keyboard=True, keyboard=[[
         KeyboardButton(text=localization.my_channels[user_lang]),
@@ -76,5 +80,17 @@ def answer_on_message(user_id: int, user_lang: str) -> InlineKeyboardMarkup:
         InlineKeyboardButton(text='Answer on message',
                              callback_data=AnswerOnMessage(user_id=user_id,
                                                            user_lang=user_lang).pack())
+    ]])
+    return keyboard
+
+
+def delete_feed_keyaboard(user_lang: str) -> InlineKeyboardMarkup:
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[[
+        InlineKeyboardButton(text=localization.yes[user_lang],
+                             callback_data=FeedClearAnswer(
+                                 answer=True).pack()),
+        InlineKeyboardButton(text=localization.no[user_lang],
+                             callback_data=FeedClearAnswer(
+                                 answer=False).pack())
     ]])
     return keyboard

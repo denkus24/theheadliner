@@ -149,3 +149,27 @@ send_me_file = {'uk': 'Відправте файл в форматі OPML',
 channels_imported_succesfully = {'uk': 'Канали імпортовано успішно',
                                  'en': "Channel imported successfully",
                                  'ru': 'Каналы импортировано успешно'}
+
+yes = {'uk': 'Так',
+       'en': "Yes",
+       'ru': 'Да'}
+
+no = {'uk': 'Ні',
+      'en': "No",
+      'ru': 'Нет'}
+
+your_feed_will_be_cleared = {'uk': 'Ваші стрічки будуть видалені та замінені на нові, ви впевнені?',
+                             'en': "Your feeds will be deleted and replaced with new ones, are you sure?",
+                             'ru': 'Ваши каналы будут удалены и заменены новыми. Вы уверены?'}
+
+importing_process = {'uk': 'Імпортування...',
+                     'en': "Importing...",
+                     'ru': 'Импортирование...'}
+
+importing_finished = {'uk': '✅ Імпортування завершено',
+                      'en': '✅ Import complete',
+                      'ru': '✅ Импортирование завершено'}
+
+importing_error = {'uk': '❌ Помилка при імпортуванні',
+                   'en': '❌ Error while importing',
+                   'ru': '❌ Ошибка при импортировании'}

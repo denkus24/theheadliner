@@ -43,6 +43,10 @@ class Base(object):
         await Base.DATABASE[collection].delete_one(query)
 
     @staticmethod
+    async def delete_many(collection, query) -> None:
+        await Base.DATABASE[collection].delete_many(query)
+
+    @staticmethod
     async def get_all(collection) -> list:
         return await Base.DATABASE[collection].find().to_list(length=None)
 
@@ -138,3 +142,7 @@ class Database(Base):
     @staticmethod
     async def get_number_of_users() -> int:
         return await Database.count('users', {})
+
+    @staticmethod
+    async def clear_users_channels(id: int) -> None:
+        await Database.delete_many('channels', {'id': id})

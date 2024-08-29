@@ -12,3 +12,6 @@ class WriteToDeveloperAdmin(StatesGroup):
 
 class SenderAdmin(StatesGroup):
     message = State()
+
+class ImportOPML(StatesGroup):
+    document = State()
